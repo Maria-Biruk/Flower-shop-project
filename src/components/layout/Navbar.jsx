@@ -6,6 +6,8 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const userBtnRef = useRef(null);
+  const [shopDropdownOpen, setShopDropdownOpen] = useState(false);
+  const shopBtnRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,14 +34,17 @@ export default function Navbar() {
       if (userBtnRef.current && !userBtnRef.current.contains(e.target)) {
         setUserDropdownOpen(false);
       }
+      if (shopBtnRef.current && !shopBtnRef.current.contains(e.target)) {
+        setShopDropdownOpen(false);
+      }
     }
-    if (userDropdownOpen) {
+    if (userDropdownOpen || shopDropdownOpen) {
       document.addEventListener("mousedown", handleClick);
     } else {
       document.removeEventListener("mousedown", handleClick);
     }
     return () => document.removeEventListener("mousedown", handleClick);
-  }, [userDropdownOpen]);
+  }, [userDropdownOpen, shopDropdownOpen]);
 
   return (
     <nav
@@ -58,9 +63,31 @@ export default function Navbar() {
           <Link to="/" className="hover:text-[#f72798] transition-colors">
             Home
           </Link>
-          <Link to="/shop" className="hover:text-[#f72798] transition-colors">
-            Shop
-          </Link>
+          <div className="relative flex items-center h-full" ref={shopBtnRef}>
+            <button 
+              className="hover:text-[#f72798] transition-colors py-4 -my-4"
+              onMouseEnter={() => setShopDropdownOpen(true)}
+              onMouseLeave={() => setShopDropdownOpen(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                setShopDropdownOpen((prev) => !prev);
+              }}
+            >
+              Shop
+            </button>
+            <div 
+              className={`absolute left-[-20px] top-full mt-0 w-48 bg-white text-[#18181b] rounded-xl shadow-lg z-50 transition-all duration-200 border border-gray-100 ${shopDropdownOpen ? "opacity-100 pointer-events-auto translate-y-0" : "opacity-0 pointer-events-none translate-y-2"}`}
+              onMouseEnter={() => setShopDropdownOpen(true)}
+              onMouseLeave={() => setShopDropdownOpen(false)}
+            >
+              <div className="flex flex-col py-2">
+                <Link to="/shop?category=anniversary" onClick={() => setShopDropdownOpen(false)} className="px-4 py-2.5 hover:bg-[#fdf6fa] hover:text-[#f72798] transition-colors font-medium border-b border-gray-50 last:border-b-0">Anniversary</Link>
+                <Link to="/shop?category=birthday" onClick={() => setShopDropdownOpen(false)} className="px-4 py-2.5 hover:bg-[#fdf6fa] hover:text-[#f72798] transition-colors font-medium border-b border-gray-50 last:border-b-0">Happy Birthday</Link>
+                <Link to="/shop?category=sympathy" onClick={() => setShopDropdownOpen(false)} className="px-4 py-2.5 hover:bg-[#fdf6fa] hover:text-[#f72798] transition-colors font-medium border-b border-gray-50 last:border-b-0">Sympathy</Link>
+                <Link to="/shop?category=event" onClick={() => setShopDropdownOpen(false)} className="px-4 py-2.5 hover:bg-[#fdf6fa] hover:text-[#f72798] transition-colors font-medium">For Event</Link>
+              </div>
+            </div>
+          </div>
           <Link to="/about" className="hover:text-[#f72798] transition-colors">
             About
           </Link>
@@ -221,13 +248,24 @@ export default function Navbar() {
           >
             Home
           </Link>
-          <Link
-            to="/shop"
-            onClick={() => setMenuOpen(false)}
-            className="hover:text-[#f72798] transition-colors"
-          >
-            Shop
-          </Link>
+          <div className="flex flex-col gap-2">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                // We're on mobile, you could add a toggle state here if desired, 
+                // but since sub-links are always visible below it we just prevent default.
+              }}
+              className="hover:text-[#f72798] transition-colors text-left"
+            >
+              Shop
+            </button>
+            <div className={`flex flex-col gap-3 pl-4 border-l-2 ml-2 mt-1 ${isScrolled ? "border-[#0b1220]/10" : "border-white/10"}`}>
+              <Link to="/shop?category=anniversary" onClick={() => setMenuOpen(false)} className="hover:text-[#f72798] transition-colors text-sm">Anniversary</Link>
+              <Link to="/shop?category=birthday" onClick={() => setMenuOpen(false)} className="hover:text-[#f72798] transition-colors text-sm">Happy Birthday</Link>
+              <Link to="/shop?category=sympathy" onClick={() => setMenuOpen(false)} className="hover:text-[#f72798] transition-colors text-sm">Sympathy</Link>
+              <Link to="/shop?category=event" onClick={() => setMenuOpen(false)} className="hover:text-[#f72798] transition-colors text-sm">For Event</Link>
+            </div>
+          </div>
           <Link
             to="/about"
             onClick={() => setMenuOpen(false)}

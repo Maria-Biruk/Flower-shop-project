@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   return (
     <footer className="bg-white border-t border-gray-100 pt-16 pb-4 px-4 md:px-0 mt-16">
@@ -42,24 +44,24 @@ export default function Footer() {
           </h3>
           <ul className="flex flex-col gap-2 text-lg">
             <li>
-              <a href="#" className="hover:text-[#f72798]">
+              <Link to="/" className="hover:text-[#f72798]">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-[#f72798]">
+              <Link to="/shop" className="hover:text-[#f72798]">
                 Shop
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-[#f72798]">
+              <Link to="/about" className="hover:text-[#f72798]">
                 About Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-[#f72798]">
+              <Link to="/contact" className="hover:text-[#f72798]">
                 Contact
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#" className="hover:text-[#f72798]">

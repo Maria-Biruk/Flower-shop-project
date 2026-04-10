@@ -2,6 +2,7 @@ import FeaturedBouquets from "../components/home/FeaturedBouquets";
 import ShopByOccasion from "../components/home/ShopByOccasion";
 import Testimonials from "../components/Testimonials";
 import NewsletterSignup from "../components/NewsletterSignup";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -71,9 +72,9 @@ export default function Home() {
                   />
                 </svg>
               </button>
-              <button className="px-8 py-3.5 bg-white/10 border-2 border-[#f72798] text-[#f72798] hover:bg-white/15 text-base font-medium rounded-full transition-all shadow-sm backdrop-blur">
+              <Link to="/about" className="px-8 py-3.5 bg-white/10 border-2 border-[#f72798] text-[#f72798] hover:bg-white/15 text-base font-medium rounded-full transition-all shadow-sm backdrop-blur inline-flex items-center justify-center">
                 Our Story
-              </button>
+              </Link>
             </div>
           </div>
         </div>
