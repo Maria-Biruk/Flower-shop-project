@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useUserStore } from '../../store/useUserStore.jsx';
+
 const IconArrowRight = (props) => (
   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
     <path
@@ -69,6 +72,19 @@ const BOUQUETS = [
 ];
 
 export const FeaturedBouquets = ({ onAddToCart }) => {
+  const { isAuthenticated } = useUserStore();
+  const [addedProducts, setAddedProducts] = useState({});
+  
+  const handleAddToCart = (item) => {
+    onAddToCart?.(item);
+    if (isAuthenticated) {
+      setAddedProducts(prev => ({ ...prev, [item.id]: true }));
+      setTimeout(() => {
+        setAddedProducts(prev => ({ ...prev, [item.id]: false }));
+      }, 2000);
+    }
+  };
+  
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -82,10 +98,10 @@ export const FeaturedBouquets = ({ onAddToCart }) => {
               Featured Bouquets
             </h2>
           </div>
-          <button className="text-[#f72798] font-bold flex items-center gap-2 group">
+          <a href="/shop" className="text-[#f72798] font-bold flex items-center gap-2 group">
             View All Products
             <IconArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+          </a>
         </div>
 
         {/* Cards */}
@@ -129,13 +145,20 @@ export const FeaturedBouquets = ({ onAddToCart }) => {
                     <span className="text-xl font-bold text-[#0b1220]">
                       ${item.price.toFixed(2)}
                     </span>
-                    <button
-                      onClick={() => onAddToCart?.(item)}
-                      className="flex items-center gap-2 px-5 py-2 rounded-full border-2 border-[#f72798] text-[#f72798] font-bold hover:bg-[#f72798] hover:text-white transition"
-                      aria-label={`Add ${item.name} to cart`}
-                    >
-                      <IconShoppingCart className="w-4 h-4" />
-                    </button>
+                    <div className="flex flex-col items-end gap-1">
+                      <button
+                        onClick={() => handleAddToCart(item)}
+                        className="flex items-center gap-2 px-5 py-2 rounded-full border-2 border-[#f72798] text-[#f72798] font-bold hover:bg-[#f72798] hover:text-white transition"
+                        aria-label={`Add ${item.name} to cart`}
+                      >
+                        <IconShoppingCart className="w-4 h-4" />
+                      </button>
+                      {addedProducts[item.id] && (
+                        <span className="text-green-500 text-xs font-medium animate-fade-in">
+                          Added
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const OCCASIONS = [
   {
@@ -28,6 +28,12 @@ const OCCASIONS = [
 ];
 
 export default function ShopByOccasion() {
+  const navigate = useNavigate();
+  
+  const handleOccasionClick = (key) => {
+    navigate(`/shop?category=${key}`);
+  };
+  
   return (
     <section className="bg-[#f6eef2] w-full py-14">
       {/* Title */}
@@ -47,6 +53,7 @@ export default function ShopByOccasion() {
           {OCCASIONS.map((o) => (
             <div
               key={o.key}
+              onClick={() => handleOccasionClick(o.key)}
               className="group relative rounded-[20px] overflow-hidden shadow-lg cursor-pointer border border-gray-200"
               style={{ height: "383px" }}
             >

@@ -3,8 +3,10 @@ import ShopByOccasion from "../components/home/ShopByOccasion";
 import Testimonials from "../components/Testimonials";
 import NewsletterSignup from "../components/NewsletterSignup";
 import { Link } from "react-router-dom";
+import { useCartStore } from "../store/useCartStore.jsx";
 
 export default function Home() {
+  const { addItem } = useCartStore();
   return (
     <>
       <div className="relative w-full min-h-[110vh] flex items-stretch overflow-hidden font-sans p-0 m-0">
@@ -81,7 +83,7 @@ export default function Home() {
       </div>
 
       {/* Featured Bouquets Section */}
-      <FeaturedBouquets />
+      <FeaturedBouquets onAddToCart={addItem} />
 
       {/* Shop by Occasion */}
       <ShopByOccasion />
