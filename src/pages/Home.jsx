@@ -12,7 +12,7 @@ export default function Home() {
       <div className="relative w-full min-h-[110vh] flex items-stretch overflow-hidden font-sans p-0 m-0">
         {/* Background Image */}
         <img
-          src="https://storage.googleapis.com/dala-prod-public-storage/generated-images/c19f2bdc-d442-43ba-ba7c-ce9339b7a0f1/hero-bouquet-4e4b37d6-1774791197885.webp"
+          src="C:\Users\Hp\Desktop\Projects\Maya's Blossom\colorful tulip background.jpg"
           alt="flowers"
           className="absolute inset-0 w-full h-full object-cover object-center opacity-100 z-0"
           style={{ minHeight: "110vh", height: "100%", margin: 0, padding: 0 }}
